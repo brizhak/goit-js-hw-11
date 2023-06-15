@@ -24,6 +24,7 @@ form {
     position: fixed;
     padding-top: 10px;
     padding-bottom: 10px;
+    z-index: 999;
 }
 
 input {
@@ -83,6 +84,14 @@ button {
     height: 200px;
     object-fit: contain;
     margin: 0 auto;
+    
+}
+.gallery_link {
+    transition: transform 400ms ease-out;
+}
+
+.gallery_link:hover {
+    transform: scale(1.1);
 }
 
 .info {
