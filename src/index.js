@@ -96,7 +96,7 @@ async function onFormSubmit(event) {
     searchQuery = inputValue;
     page = 1;
     let responseData;
-    galleryEl.innerHTML = '';
+    
 
     if (inputValue.length === 0) {
         Notiflix.Notify.warning('Please, enter your request!')
@@ -106,6 +106,7 @@ async function onFormSubmit(event) {
             if (responseData.data.total === 0) {
                 throw new Error('Sorry, there are no images matching your search query. Please try again.');
             } else {
+              galleryEl.innerHTML = '';
               makeMarkup(responseData);
               inputEl.value = '';
               Notiflix.Notify.success(`Hooray! We found ${responseData.data.totalHits} images.`)
