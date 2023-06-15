@@ -7,9 +7,7 @@ const pixabayKey = '37256788-f288b03284a6e1a054b03f9e6';
 
 const formEl = document.querySelector('form');
 const inputEl = document.querySelector('input'); 
-const btnEl = document.querySelector('button');
 const galleryEl = document.querySelector('.gallery');
-const loadMoreBtnEL = document.querySelector('.load-more');
 let page = 1;
 let searchQuery = '';
 let perPage;
@@ -86,7 +84,7 @@ function makeMarkup(responseData) {
     behavior: "smooth",
   });
 
-  window.scrollTo(0, currentScrollTop);
+  window.scrollTo(0, 0);
 }
 
 async function onFormSubmit(event) {
@@ -97,7 +95,6 @@ async function onFormSubmit(event) {
     page = 1;
     let responseData;
     
-
     if (inputValue.length === 0) {
         Notiflix.Notify.warning('Please, enter your request!')
     } else {
