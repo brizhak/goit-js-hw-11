@@ -7,13 +7,16 @@ const pixabayKey = '37256788-f288b03284a6e1a054b03f9e6';
 
 const formEl = document.querySelector('form');
 const inputEl = document.querySelector('input'); 
+const btnEl = document.querySelector('button');
 const galleryEl = document.querySelector('.gallery');
+const loadMoreBtnEL = document.querySelector('.load-more');
 let page = 1;
 let searchQuery = '';
 let perPage;
 let totalValues;
 let inputValue = '';
 
+let lightbox; 
 
 function getUrl(inputValue, page) {
     perPage = 40;
@@ -35,7 +38,7 @@ function getUrl(inputValue, page) {
 function getAxiosRequest(inputValue, page) {
     const url = getUrl(inputValue, page);
    
-    return axios.get(url).then(response => response).catch(error => Notiflix.Notify.failure(error));
+    return axios.get(url).then(response => response).catch(error => Notiflix.Notify.failure(error))
 }
 
 function makeMarkup(responseData) {
@@ -71,14 +74,17 @@ function makeMarkup(responseData) {
   galleryItems.forEach(item => {
     galleryEl.appendChild(item);
   });
+  
   lightbox.refresh();
 
-  const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
+  const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
     top: cardHeight * 2,
     behavior: "smooth",
-});
+  });
 
   window.scrollTo(0, currentScrollTop);
 }
@@ -110,7 +116,6 @@ async function onFormSubmit(event) {
     }
 };
 
-
 formEl.addEventListener('submit', onFormSubmit);
 
 let isLoading = false;
@@ -138,18 +143,18 @@ async function loadMoreImages() {
 }
 
 function onWindowScroll() {
-    clearTimeout(throttleTimeout);
-    throttleTimeout = setTimeout(function () {
-      const documentRect = document.documentElement.getBoundingClientRect();
-      if (documentRect.bottom < document.documentElement.clientHeight + 150 && window.pageYOffset > currentScrollTop) {
-        loadMoreImages();
-      }
-      currentScrollTop = window.pageYOffset;
-    }, 200);
-  }
-  
-  window.addEventListener('scroll', onWindowScroll);
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    lightbox = new SimpleLightbox('.photo-card a');
-  });
+  clearTimeout(throttleTimeout);
+  throttleTimeout = setTimeout(function () {
+    const documentRect = document.documentElement.getBoundingClientRect();
+    if (documentRect.bottom < document.documentElement.clientHeight + 150 && window.pageYOffset > currentScrollTop) {
+      loadMoreImages();
+    }
+    currentScrollTop = window.pageYOffset;
+  }, 200);
+}
+
+window.addEventListener('scroll', onWindowScroll);
+
+document.addEventListener('DOMContentLoaded', function() {
+  lightbox = new SimpleLightbox('.photo-card a');
+});
